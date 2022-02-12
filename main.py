@@ -1,5 +1,5 @@
 import discord, os, pyautogui, requests, cv2, numpy, subprocess
-from config import token, guildid
+from config import *
 
 client = discord.Bot(intents=discord.Intents.all())
 
