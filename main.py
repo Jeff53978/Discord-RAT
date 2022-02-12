@@ -1,5 +1,3 @@
-# Snikkertjuh/Discord-RAT Version 1.0.1
-
 import discord, os, pyautogui, requests, cv2, numpy, subprocess
 from config import token, guildid
 
