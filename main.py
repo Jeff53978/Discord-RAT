@@ -133,4 +133,10 @@ async def lock(ctx, username, password):
             embed = discord.Embed(title="Somenthing went wrong", description=f"```{error}```", color=0x660cf)
             await ctx.respond(embed=embed)
 
+@client.slash_command(name="whois", guild_ids=guildid)
+async def whois(ctx):
+    if ctx.channel.id == channel.id:
+        embed = discord.Embed(title="Command Executed", description=f"```{os.getenv('USERNAME')}```", color=0x660cf)
+        await ctx.respond(embed=embed)
+
 client.run(token)
