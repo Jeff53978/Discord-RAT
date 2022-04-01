@@ -1,9 +1,4 @@
-from re import S
 import discord, os, pyautogui, requests, cv2, numpy, subprocess, threading
-from config import *
-
-token = token
-guildid = guildid
 
 client = discord.Bot(intents=discord.Intents.all())
 
